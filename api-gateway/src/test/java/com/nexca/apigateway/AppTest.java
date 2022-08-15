@@ -36,6 +36,7 @@ public class AppTest
         assertTrue( true );
     }
 
+    // test
     public void testAppNew()
     {
         assertTrue( true );

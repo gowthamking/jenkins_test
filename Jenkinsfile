@@ -15,9 +15,7 @@ pipeline {
                 }
             }
         }
-    }
 
-    stages {
         stage ('pullscm') {
             steps {
                 git 'https://github.com/gowthamking/jenkins_test.git'

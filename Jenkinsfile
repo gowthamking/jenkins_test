@@ -1,30 +1,16 @@
 pipeline {
-    agent { label 'linuxnode' }
-    
+    agent any
+
     tools {
         // Install the Maven version configured as "M3" and add it to the path.
         maven "MVN3"
-        jdk "jdk8"
+        jdk "JDK1.8"
     }
 
     stages {
-        stage("Ennable webhook") {
+        stage ('pullscm') {
             steps {
-                script {
-                    properties([pipelineTriggers([githubPush()])])
-                }
-            }
-        }
-        
-        stage('pullscm') {
-            steps {
-                git credentialsId: 'github', url: 'git@github.com:sathishbob/jenkins_test.git'
-            }
-        }
-        
-        stage("print") {
-            steps {
-                echo "printing some thing"
+                git 'https://github.com/gowthamking/jenkins_test.git'
             }
         }
         stage('Build') {
@@ -33,7 +19,7 @@ pipeline {
                 sh "mvn -Dmaven.test.failure.ignore=true -f api-gateway clean package"
 
                 // To run Maven on a Windows agent, use
-                //bat "mvn -Dmaven.test.failure.ignore=true -f api-gateway clean package"
+                // bat "mvn -Dmaven.test.failure.ignore=true clean package"
             }
 
             post {
